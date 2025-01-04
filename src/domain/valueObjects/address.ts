@@ -1,8 +1,6 @@
-import crypto from 'crypto';
-import { Validator } from '../validations/validator';
+import { Validator } from "../validations/validator";
 
 export type AddressProps = {
-  id: string;
   addressLine: string;
   number: number | string;
   city: string;
@@ -11,32 +9,30 @@ export type AddressProps = {
 };
 
 export default class Address {
-
   private constructor(private addressData: AddressProps) {}
-  
-  public static create(addressLine: string, number: number | string, city: string, state: string, zipCode: string): Address {
 
+  public static create(
+    addressLine: string, 
+    number: number | string, 
+    city: string, 
+    state: string, 
+    zipCode: string
+  ): Address {
     const finalZipCode = zipCode || "00000-000";
-    const finalNumber = number || "S/N"
-    
-    Validator.validateAddress(addressLine,finalNumber,city,state,finalZipCode);
-    
+    const finalNumber = number || "S/N";
+    Validator.validateAddress(addressLine, finalNumber, city, state, finalZipCode);
+
     return new Address({
-      id: crypto.randomUUID(),
       addressLine,
-      number:finalNumber,
+      number: finalNumber,
       city,
       state,
-      zipCode:finalZipCode,
+      zipCode: finalZipCode,
     });
   }
 
   public static with(data: AddressProps): Address {
     return new Address(data);
-  }
-
-  public get id(): string {
-    return this.addressData.id;
   }
 
   public get addressLine(): string {
@@ -62,6 +58,5 @@ export default class Address {
   public format(): string {
     return `${this.addressData.addressLine}, ${this.addressData.number}, ${this.addressData.city} - ${this.addressData.state}, ${this.zipCode}`;
   }
-
 
 }
