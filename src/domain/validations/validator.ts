@@ -61,4 +61,17 @@ export class Validator {
       throw new CustomError(419, "O campo 'CEP' deve estar no formato 00000-000.");
     }
   }
+
+  static validateEmail(emailAddress: string): void {
+    if (!emailAddress || emailAddress.trim() === "") {
+      throw new CustomError(419, "O campo 'E-mail' não deve ser vazio.");
+    }
+    if (emailAddress.length > 255) {
+      throw new CustomError(419, "O campo 'E-mail' deve ter no máximo 255 caracteres.");
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailAddress)) {
+      throw new CustomError(419, "O campo 'E-mail' deve conter um endereço de e-mail válido.");
+    }
+  }
 }
