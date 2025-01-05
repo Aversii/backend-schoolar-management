@@ -74,4 +74,25 @@ export class Validator {
       throw new CustomError(419, "O campo 'E-mail' deve conter um endereço de e-mail válido.");
     }
   }
+
+  static validatePassword(password: string): void {
+    if (!password || password.trim() === "") {
+      throw new CustomError(419, "O campo 'Senha' não deve ser vazio.");
+    }
+    if (password.length < 8) {
+      throw new CustomError(419, "A 'Senha' deve ter pelo menos 8 caracteres.");
+    }
+    if (!/[A-Z]/.test(password)) {
+      throw new CustomError(419, "A 'Senha' deve conter pelo menos uma letra maiúscula.");
+    }
+    if (!/[a-z]/.test(password)) {
+      throw new CustomError(419, "A 'Senha' deve conter pelo menos uma letra minúscula.");
+    }
+    if (!/[0-9]/.test(password)) {
+      throw new CustomError(419, "A 'Senha' deve conter pelo menos um número.");
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      throw new CustomError(419, "A 'Senha' deve conter pelo menos um caractere especial.");
+    }
+  }
 }
