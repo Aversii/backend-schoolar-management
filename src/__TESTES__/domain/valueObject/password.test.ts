@@ -4,7 +4,6 @@ const Password = require("../../../domain/valueObjects/password").default;
 describe("tests for password value object", () => {
   it("should create a password value object using create method", () => {
     const password = Password.create("Aversi123!");
-
     expect(password.password).toBe("Aversi123!");
   });
 

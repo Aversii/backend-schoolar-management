@@ -14,8 +14,11 @@ export default class Password {
   }
 
   public static with(data: PasswordProps): Password {
-    Validator.validatePassword(data.password);
     return new Password(data);
+  }
+
+  public get password(): string {
+    return this.passwordData.password;
   }
 
 }

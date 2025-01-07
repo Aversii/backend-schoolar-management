@@ -1,2 +1,4 @@
 node_modules
 .env
+src/__TESTES__/domain/entities
+src/domain/entities

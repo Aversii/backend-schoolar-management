@@ -10,11 +10,10 @@ export default class Email {
 
   public static create(emailAddress: string): Email {
     Validator.validateEmail(emailAddress);
-    return new Email({ emailAddress });
+    return new Email({ emailAddress: this.format(emailAddress) });
   }
 
   public static with(data: EmailProps): Email {
-    Validator.validateEmail(data.emailAddress);
     return new Email(data);
   }
 
@@ -22,7 +21,7 @@ export default class Email {
     return this.emailData.emailAddress;
   }
 
-  public format(): string {
-    return this.emailData.emailAddress.toLowerCase().trim();
+  private static format(emailAddress:string): string {
+    return emailAddress.toLowerCase().trim();
   }
 }

@@ -3,7 +3,6 @@ const Email = require("../../../domain/valueObjects/email").default;
 describe("tests for email",()=>{
     it("should create an email using 'create' method ",()=>{
         const email = Email.create("abc@gmail.com")
-
         expect(email.emailAddress).toBe("abc@gmail.com")
         expect(email.emailAddress).toContain("@")
         expect(email.emailAddress).toContain(".com")
@@ -20,7 +19,7 @@ describe("tests for email",()=>{
     });
 
     it("should format the email correctly", () => {
-        const email = Email.create("AbC@GmAiL.cOm");
-        expect(email.format()).toBe("abc@gmail.com");
+        const emailWithoutFormat = Email.create("AbC@GmAiL.cOm");
+        expect(emailWithoutFormat.emailAddress).toBe("abc@gmail.com");
     });
 })
