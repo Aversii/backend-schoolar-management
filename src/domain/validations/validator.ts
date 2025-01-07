@@ -1,5 +1,4 @@
 import { CustomError } from "../../error/customError";
-import Address from "../valueObjects/address";
 
 export class Validator {
   static validateAddress(
@@ -9,7 +8,7 @@ export class Validator {
     state: string,
     zipCode?: string
   ): void {
-    if (!addressLine || addressLine.trim() === "") {
+    if (!addressLine || addressLine === "") {
       throw new CustomError(419, "O campo 'Endereço' não deve ser vazio.");
     }
     if (addressLine.length < 3) {
@@ -26,7 +25,7 @@ export class Validator {
       throw new CustomError(419, "O campo 'Número' deve ser maior que zero.");
     }
 
-    if (!city || city.trim() === "") {
+    if (!city || city === "") {
       throw new CustomError(419, "O campo 'Cidade' não deve ser vazio.");
     }
     if (city.length < 2) {
@@ -36,7 +35,7 @@ export class Validator {
       throw new CustomError(419, "O campo 'Cidade' deve ter no máximo 50 caracteres.");
     }
 
-    if (!state || state.trim() === "") {
+    if (!state || state === "") {
       throw new CustomError(419, "O campo 'Estado' não deve ser vazio.");
     }
     if (!/^[A-Z]{2}$/.test(state)) {
@@ -54,7 +53,7 @@ export class Validator {
       throw new CustomError(419, "O campo 'Estado' deve ser uma sigla válida de um estado brasileiro.");
     }
 
-    if (!zipCode || zipCode.trim() === "") {
+    if (!zipCode || zipCode === "") {
       zipCode = "00000-000";
     }
     if (!/^\d{5}-\d{3}$/.test(zipCode)) {
@@ -63,7 +62,7 @@ export class Validator {
   }
 
   static validateEmail(emailAddress: string): void {
-    if (!emailAddress || emailAddress.trim() === "") {
+    if (!emailAddress || emailAddress === "") {
       throw new CustomError(419, "O campo 'E-mail' não deve ser vazio.");
     }
     if (emailAddress.length > 255) {
@@ -76,7 +75,7 @@ export class Validator {
   }
 
   static validatePassword(password: string): void {
-    if (!password || password.trim() === "") {
+    if (!password || password === "") {
       throw new CustomError(419, "O campo 'Senha' não deve ser vazio.");
     }
     if (password.length < 8) {
@@ -93,6 +92,51 @@ export class Validator {
     }
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
       throw new CustomError(419, "A 'Senha' deve conter pelo menos um caractere especial.");
+    }
+  }
+
+  static validateStudent(
+    fullName: string,
+    birthDate: Date,
+    motherName: string,
+    fatherName: string,
+  ): void {
+    if (!fullName || fullName === "") {
+      throw new CustomError(419, "O campo 'Nome Completo' não deve ser vazio.");
+    }
+    if (fullName.length < 3) {
+      throw new CustomError(419, "O campo 'Nome Completo' deve ter pelo menos 3 caracteres.");
+    }
+    if (fullName.length > 100) {
+      throw new CustomError(419, "O campo 'Nome Completo' deve ter no máximo 100 caracteres.");
+    }
+
+    if (!birthDate || isNaN(birthDate.getTime())) {
+      throw new CustomError(419, "O campo 'Data de Nascimento' deve conter uma data válida.");
+    }
+    const today = new Date();
+    if (birthDate >= today) {
+      throw new CustomError(419, "A 'Data de Nascimento' deve ser anterior à data atual.");
+    }
+
+    if (!motherName || motherName === "") {
+      throw new CustomError(419, "O campo 'Nome da Mãe' não deve ser vazio.");
+    }
+    if (motherName.length < 3) {
+      throw new CustomError(419, "O campo 'Nome da Mãe' deve ter pelo menos 3 caracteres.");
+    }
+    if (motherName.length > 100) {
+      throw new CustomError(419, "O campo 'Nome da Mãe' deve ter no máximo 100 caracteres.");
+    }
+
+    if (!fatherName || fatherName === "") {
+      throw new CustomError(419, "O campo 'Nome do Pai' não deve ser vazio.");
+    }
+    if (fatherName.length < 3) {
+      throw new CustomError(419, "O campo 'Nome do Pai' deve ter pelo menos 3 caracteres.");
+    }
+    if (fatherName.length > 100) {
+      throw new CustomError(419, "O campo 'Nome do Pai' deve ter no máximo 100 caracteres.");
     }
   }
 }
